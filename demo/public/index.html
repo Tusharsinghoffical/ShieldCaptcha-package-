@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ShieldCaptcha — Local Demo &amp; Integration Tester</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #f8fafc;
+      background-image:
+        radial-gradient(circle at 10% 15%, rgba(99, 102, 241, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 85%, rgba(56, 189, 248, 0.06) 0%, transparent 40%);
+      color: #0f172a;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 32px 16px;
+    }
+    .card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      padding: 32px 28px;
+      border-radius: 20px;
+      box-shadow: 0 16px 40px -6px rgba(15, 23, 42, 0.09);
+      width: 100%;
+      max-width: 460px;
+    }
+    .brand-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .brand-title {
+      font-size: 19px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .badge {
+      font-size: 10px;
+      font-weight: 700;
+      background: #eef2ff;
+      color: #4f46e5;
+      padding: 3px 8px;
+      border-radius: 9999px;
+      border: 1px solid #c7d2fe;
+    }
+    .info-bar {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 24px;
+      font-size: 11px;
+      color: #64748b;
+      line-height: 1.6;
+    }
+    .info-bar strong { color: #1e293b; }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 6px;
+    }
+    input[type="email"], input[type="password"] {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 13px;
+      color: #0f172a;
+      outline: none;
+      transition: all 0.15s;
+    }
+    input:focus {
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+    }
+    #captcha-container {
+      min-height: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 20px 0;
+    }
+    button.btn-submit {
+      width: 100%;
+      padding: 13px;
+      background: #4f46e5;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 700;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+    }
+    button.btn-submit:hover:not(:disabled) {
+      background: #4338ca;
+      box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35);
+    }
+    button.btn-submit:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+      box-shadow: none;
+      opacity: 0.7;
+    }
+    .result-box {
+      margin-top: 20px;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 12px;
+      display: none;
+    }
+    .result-box.success {
+      display: block;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #166534;
+    }
+    .result-box.error {
+      display: block;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #991b1b;
+    }
+    .score-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 800;
+      background: #22c55e;
+      color: white;
+      margin-left: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="brand-header">
+      <div class="brand-title">
+        <span>🛡️ ShieldCaptcha</span>
+        <span class="badge">SDK v4.2 Demo</span>
+      </div>
+      <span style="font-size: 11px; color: #10b981; font-weight: 600;">● Engine Ready</span>
+    </div>
+
+    <div class="info-bar" id="info-bar">
+      <div><strong>Target API:</strong> <span id="lbl-api">Loading...</span></div>
+      <div><strong>Active Site Key:</strong> <span id="lbl-sitekey">Loading...</span></div>
+      <div><strong>Status:</strong> Ready for verification</div>
+    </div>
+
+    <form id="demo-form">
+      <div class="form-group">
+        <label for="inp-email">Email Address</label>
+        <input type="email" id="inp-email" value="developer@test-system.local" required>
+      </div>
+
+      <div class="form-group">
+        <label for="inp-pass">Password</label>
+        <input type="password" id="inp-pass" value="••••••••••••" required>
+      </div>
+
+      <!-- ShieldCaptcha Widget Target -->
+      <div id="captcha-container">
+        <div style="font-size: 11px; color: #94a3b8;">Mounting ShieldCaptcha engine...</div>
+      </div>
+
+      <button type="submit" id="btn-submit" class="btn-submit" disabled>
+        Submit Protected Form
+      </button>
+    </form>
+
+    <div id="result-box" class="result-box"></div>
+  </div>
+
+  <script src="/captcha.js"></script>
+  <script>
+    let currentToken = '';
+
+    async function init() {
+      try {
+        const cfgRes = await fetch('/api/config');
+        const cfg = await cfgRes.json();
+        document.getElementById('lbl-api').textContent = cfg.apiUrl;
+        document.getElementById('lbl-sitekey').textContent = cfg.siteKey;
+
+        // Mount ShieldCaptcha widget
+        if (window.ShieldCaptcha) {
+          window.ShieldCaptcha.mount('#captcha-container', {
+            siteKey: cfg.siteKey,
+            apiBase: cfg.apiUrl,
+            mode: 'checkbox',
+            onToken: (token, meta) => {
+              currentToken = token;
+              document.getElementById('btn-submit').disabled = false;
+              showResult('success', `✓ Human challenge completed! Score: <span class="score-badge">${meta.score || 95}/100</span>. Click 'Submit Protected Form' to verify token server-side.`);
+            },
+            onReset: () => {
+              currentToken = '';
+              document.getElementById('btn-submit').disabled = true;
+            }
+          });
+        }
+      } catch (err) {
+        showResult('error', 'Could not load configuration: ' + err.message);
+      }
+    }
+
+    document.getElementById('demo-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!currentToken) return;
+
+      const btn = document.getElementById('btn-submit');
+      btn.disabled = true;
+      btn.textContent = 'Verifying with ShieldCaptcha Server...';
+
+      try {
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: document.getElementById('inp-email').value,
+            token: currentToken
+          })
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          showResult('success', `🎉 <strong>SERVER VERIFICATION PASSED!</strong><br>${data.message}<br>• Trust Score: <strong>${data.score}/100</strong><br>• Verification Mode: <strong>${data.mode}</strong><br>• Timestamp: ${data.challenge_ts}`);
+          btn.textContent = 'Verified Successfully ✓';
+        } else {
+          showResult('error', `❌ <strong>Verification Rejected:</strong> ${data.message || data.error}`);
+          btn.textContent = 'Try Again';
+          btn.disabled = false;
+        }
+      } catch (err) {
+        showResult('error', 'Server error: ' + err.message);
+        btn.textContent = 'Submit Protected Form';
+        btn.disabled = false;
+      }
+    });
+
+    function showResult(type, html) {
+      const box = document.getElementById('result-box');
+      box.className = 'result-box ' + type;
+      box.innerHTML = html;
+    }
+
+    window.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>

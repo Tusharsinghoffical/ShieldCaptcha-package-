@@ -1,0 +1,34 @@
+{
+  "name": "shieldcaptcha",
+  "version": "4.2.0",
+  "description": "Official ShieldCaptcha Enterprise SDK & Client Library for Node.js, Express, Next.js, and Web applications",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "bin": {
+    "shieldcaptcha": "./bin/cli.js"
+  },
+  "scripts": {
+    "postinstall": "node bin/welcome.js",
+    "start": "node demo/server.js",
+    "test": "node bin/cli.js test",
+    "demo": "node demo/server.js",
+    "info": "node bin/cli.js info",
+    "configure": "node bin/cli.js configure"
+  },
+  "keywords": [
+    "captcha",
+    "shieldcaptcha",
+    "bot-defense",
+    "turnstile",
+    "pow",
+    "jigsaw-puzzle",
+    "human-verification",
+    "security"
+  ],
+  "author": "ShieldCaptcha Enterprise Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tusharsinghoffical/ShieldCaptcha.git"
+  }
+}
