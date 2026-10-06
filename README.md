@@ -64,7 +64,7 @@ app.use(express.json());
 const captcha = new ShieldCaptcha({
   siteKey: process.env.SHIELDCAPTCHA_SITE_KEY,
   secretKey: process.env.SHIELDCAPTCHA_SECRET_KEY,
-  apiUrl: 'https://shield-captcha.vercel.app' // or http://localhost:3000
+  apiUrl: 'https://shieldcaptcha.vercel.app'
 });
 
 // Protect your endpoint
@@ -102,7 +102,7 @@ app.listen(3000);
 ### HTML:
 ```html
 <!-- 1. Include Script -->
-<script src="https://shield-captcha.vercel.app/captcha.js"></script>
+<script src="https://shieldcaptcha.vercel.app/captcha.js"></script>
 
 <!-- 2. Target Container -->
 <div id="captcha-box"></div>

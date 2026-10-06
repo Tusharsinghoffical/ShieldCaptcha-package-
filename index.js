@@ -12,13 +12,13 @@ class ShieldCaptcha {
    * @param {Object} options
    * @param {string} options.siteKey - ShieldCaptcha public site key (pub_shield_...)
    * @param {string} options.secretKey - ShieldCaptcha private secret key (sec_shield_...)
-   * @param {string} [options.apiUrl] - Base URL of ShieldCaptcha engine (default: https://shield-captcha.vercel.app or local fallback)
+   * @param {string} [options.apiUrl] - Base URL of ShieldCaptcha engine (default: https://shieldcaptcha.vercel.app)
    * @param {number} [options.timeout] - Request timeout in ms (default: 5000)
    */
   constructor(options = {}) {
     this.siteKey = options.siteKey || process.env.SHIELDCAPTCHA_SITE_KEY || process.env.NEXT_PUBLIC_SITE_KEY || process.env.SITE_KEY || '';
     this.secretKey = options.secretKey || process.env.SHIELDCAPTCHA_SECRET_KEY || process.env.SITE_SECRET || '';
-    this.apiUrl = (options.apiUrl || process.env.SHIELDCAPTCHA_API_URL || process.env.NEXT_PUBLIC_CAPTCHA_API || 'http://localhost:3000').replace(/\/+$/, '');
+    this.apiUrl = (options.apiUrl || process.env.SHIELDCAPTCHA_API_URL || process.env.NEXT_PUBLIC_CAPTCHA_API || 'https://shieldcaptcha.vercel.app').replace(/\/+$/, '');
     this.timeout = options.timeout || 5000;
   }
 

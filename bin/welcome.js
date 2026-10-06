@@ -33,7 +33,7 @@ loadEnv();
 
 const siteKey = process.env.SHIELDCAPTCHA_SITE_KEY || process.env.NEXT_PUBLIC_SITE_KEY || process.env.SITE_KEY || '';
 const secretKey = process.env.SHIELDCAPTCHA_SECRET_KEY || process.env.SITE_SECRET || '';
-const apiUrl = process.env.SHIELDCAPTCHA_API_URL || process.env.NEXT_PUBLIC_CAPTCHA_API || 'https://shield-captcha.vercel.app';
+const apiUrl = process.env.SHIELDCAPTCHA_API_URL || process.env.NEXT_PUBLIC_CAPTCHA_API || 'https://shieldcaptcha.vercel.app';
 
 // Collect System Information
 const totalMemMB = Math.round(os.totalmem() / (1024 * 1024));

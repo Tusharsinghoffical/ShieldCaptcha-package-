@@ -49,7 +49,7 @@ loadEnv();
 
 let siteKey = getArgValue('site-key') || process.env.SHIELDCAPTCHA_SITE_KEY || process.env.NEXT_PUBLIC_SITE_KEY || process.env.SITE_KEY || 'pub_shield_live_demo_sitekey';
 let secretKey = getArgValue('secret-key') || process.env.SHIELDCAPTCHA_SECRET_KEY || process.env.SITE_SECRET || 'sec_shield_live_demo_secretkey';
-let apiUrl = getArgValue('api-url') || process.env.SHIELDCAPTCHA_API_URL || process.env.NEXT_PUBLIC_CAPTCHA_API || 'http://localhost:3000';
+let apiUrl = getArgValue('api-url') || process.env.SHIELDCAPTCHA_API_URL || process.env.NEXT_PUBLIC_CAPTCHA_API || 'https://shieldcaptcha.vercel.app';
 
 // Strip trailing slash
 if (apiUrl.endsWith('/')) apiUrl = apiUrl.slice(0, -1);

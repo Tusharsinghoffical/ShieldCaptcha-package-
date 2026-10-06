@@ -7,7 +7,7 @@ export interface ShieldCaptchaOptions {
   siteKey?: string;
   /** ShieldCaptcha private secret key (sec_shield_...) */
   secretKey?: string;
-  /** Base URL of ShieldCaptcha engine (default: https://shield-captcha.vercel.app or local) */
+  /** Base URL of ShieldCaptcha engine (default: https://shieldcaptcha.vercel.app) */
   apiUrl?: string;
   /** Timeout in milliseconds (default: 5000) */
   timeout?: number;

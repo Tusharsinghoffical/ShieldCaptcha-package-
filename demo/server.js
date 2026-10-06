@@ -32,7 +32,7 @@ loadEnv();
 
 const siteKey = process.env.SHIELDCAPTCHA_SITE_KEY || process.env.NEXT_PUBLIC_SITE_KEY || 'pub_shield_live_demo_sitekey';
 const secretKey = process.env.SHIELDCAPTCHA_SECRET_KEY || process.env.SITE_SECRET || 'sec_shield_live_demo_secretkey';
-const apiUrl = process.env.SHIELDCAPTCHA_API_URL || process.env.NEXT_PUBLIC_CAPTCHA_API || 'http://localhost:3000';
+const apiUrl = process.env.SHIELDCAPTCHA_API_URL || process.env.NEXT_PUBLIC_CAPTCHA_API || 'https://shieldcaptcha.vercel.app';
 const port = parseInt(process.env.PORT || '4000', 10);
 
 const captcha = new ShieldCaptcha({ siteKey, secretKey, apiUrl });
